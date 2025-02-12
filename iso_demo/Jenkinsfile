@@ -5,32 +5,28 @@ pipeline {
 
     stage('Compile') { 
       steps {
-        if (isUnix()) {
-	      sh 'mvn --batch-mode clean compile'
-	    } else {
-	      bat 'mvn --batch-mode clean compile'
-	    }
+        execute('mvn --batch-mode clean compile')
       }
     }
 
     stage('Verify') { 
       steps {
-        if (isUnix()) {
-	      sh 'mvn --batch-mode verify'
-	    } else {
-	      bat 'mvn --batch-mode verify'
-	    }
+        execute('mvn --batch-mode verify')
       }
     }
 
     stage('Install') { 
       steps {
-        if (isUnix()) {
-	      sh 'mvn --batch-mode install'
-	    } else {
-	      bat 'mvn --batch-mode install'
-	    }
+        execute('mvn --batch-mode install')
       }
     }
+  }
+}
+
+def execute(cmd) {
+  if (Boolean.valueOf(env.UNIX)) {
+    sh cmd
+  } else {
+    bat cmd
   }
 }
