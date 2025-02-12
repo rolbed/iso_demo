@@ -5,19 +5,25 @@ pipeline {
 
     stage('Compile') { 
       steps {
-        execute('mvn --batch-mode clean compile')
+		dir('iso_demo') {
+          execute('mvn --batch-mode clean compile')
+        }
       }
     }
 
     stage('Verify') { 
       steps {
-        execute('mvn --batch-mode verify')
+		dir('iso_demo') {
+          execute('mvn --batch-mode verify')
+        }
       }
     }
 
     stage('Install') { 
       steps {
-        execute('mvn --batch-mode install')
+		dir('iso_demo') {
+          execute('mvn --batch-mode install')
+        }
       }
     }
   }
